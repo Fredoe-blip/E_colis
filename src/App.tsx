@@ -60,50 +60,64 @@ const App: React.FC = () => {
             <Route path="*" element={
               <div className="flex flex-col md:flex-row min-h-screen">
                 {/* Sidebar */}
-                <aside className="w-full md:w-64 bg-white border-r border-zinc-200 p-6 flex flex-col">
-                  <div className="flex items-center gap-2 mb-10">
-                    <div className="bg-emerald-600 p-2 rounded-xl">
-                      <Package className="text-white w-6 h-6" />
+                <aside className="w-full md:w-64 bg-white border-r border-zinc-200 p-5 flex flex-col shrink-0">
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-emerald-600 p-2 rounded-xl">
+                        <Package className="text-white w-5 h-5" />
+                      </div>
+                      <h1 className="text-lg font-black tracking-tight">e-Colis</h1>
                     </div>
-                    <h1 className="text-xl font-bold tracking-tight">e-Colis</h1>
+                    {/* Bouton déconnexion visible en haut sur mobile */}
+                    <button
+                      onClick={handleLogout}
+                      title="Se déconnecter"
+                      className="md:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-50 text-red-600 text-xs font-bold border border-red-100 hover:bg-red-100 transition-all"
+                    >
+                      <LogOut size={14} />
+                      Quitter
+                    </button>
                   </div>
 
                   <nav className="flex-1 space-y-1">
                     <NavLink to="/" icon={<LayoutDashboard size={20} />} label="Dashboard" />
                     {user.role === 'merchant' && (
-                      <NavLink to="/new-delivery" icon={<PlusCircle size={20} />} label="New Delivery" />
+                      <NavLink to="/new-delivery" icon={<PlusCircle size={20} />} label="Nouvelle livraison" />
                     )}
                     {user.role === 'courier' && (
                       <>
                         <NavLink to="/missions" icon={<Truck size={20} />} label="Missions" />
-                        <NavLink to="/rewards" icon={<Award size={20} />} label="Rewards" />
+                        <NavLink to="/rewards" icon={<Award size={20} />} label="Récompenses" />
                       </>
                     )}
-                    <NavLink to="/profile" icon={<UserIcon size={20} />} label="Profile" />
+                    <NavLink to="/profile" icon={<UserIcon size={20} />} label="Profil" />
                   </nav>
 
-                  <div className="mt-auto pt-6 border-t border-zinc-100">
-                    <div className="flex items-center gap-3 mb-6 px-2">
-                      <div className="w-10 h-10 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-600 font-medium">
+                  <div className="mt-auto pt-5 border-t border-zinc-100">
+                    <div className="flex items-center gap-3 mb-4 px-2">
+                      <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm">
                         {user.name[0].toUpperCase()}
                       </div>
-                      <div className="overflow-hidden">
+                      <div className="overflow-hidden flex-1">
                         <p className="text-sm font-semibold truncate">{user.name}</p>
-                        <p className="text-xs text-zinc-500 capitalize">{user.role}</p>
+                        <p className="text-xs text-zinc-400 capitalize">
+                          {user.role === 'merchant' ? 'Marchand' : user.role === 'courier' ? 'Livreur' : 'Admin'}
+                        </p>
                       </div>
                     </div>
-                    <button 
+                    {/* Bouton déconnexion principal - visible sur desktop */}
+                    <button
                       onClick={handleLogout}
-                      className="flex items-center gap-2 w-full px-2 py-2 text-sm text-zinc-500 hover:text-red-600 transition-colors"
+                      className="hidden md:flex items-center gap-2 w-full px-3 py-2.5 rounded-xl text-sm font-semibold text-red-500 hover:bg-red-50 hover:text-red-600 border border-transparent hover:border-red-100 transition-all"
                     >
-                      <LogOut size={18} />
-                      <span>Sign Out</span>
+                      <LogOut size={16} />
+                      <span>Se déconnecter</span>
                     </button>
                   </div>
                 </aside>
 
                 {/* Main Content */}
-                <main className="flex-1 p-4 md:p-10 overflow-y-auto">
+                <main className="flex-1 p-4 md:p-10 overflow-y-auto min-h-screen">
                   <Routes>
                     <Route path="/" element={
                       user.role === 'merchant' ? <MerchantDashboard user={user} /> : 
