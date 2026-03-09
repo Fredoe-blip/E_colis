@@ -23,6 +23,9 @@ import LoginView from './views/LoginView';
 import MerchantDashboard from './views/MerchantDashboard';
 import CourierDashboard from './views/CourierDashboard';
 import AdminDashboard from './views/AdminDashboard';
+import WarRoomView from './views/WarRoomView';
+import TourneeView from './views/TourneeView';
+import RevenusView from './views/RevenusView';
 
 import PublicTrackingView from './views/PublicTrackingView';
 
@@ -127,6 +130,9 @@ const App: React.FC = () => {
                     <Route path="/new-delivery" element={user.role === 'merchant' ? <NewDeliveryView user={user} /> : <Navigate to="/" />} />
                     <Route path="/missions" element={user.role === 'courier' ? <CourierMissions user={user} /> : <Navigate to="/" />} />
                     <Route path="/rewards" element={user.role === 'courier' ? <RewardsView user={user} /> : <Navigate to="/" />} />
+                    <Route path="/tournee" element={user.role === 'courier' ? <TourneeView user={user} /> : <Navigate to="/" />} />
+                    <Route path="/revenus" element={user.role === 'courier' ? <RevenusView user={user} /> : <Navigate to="/" />} />
+                    <Route path="/war-room" element={user.role === 'merchant' ? <WarRoomView user={user} /> : <Navigate to="/" />} />
                     <Route path="/profile" element={<ProfileView user={user} />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
