@@ -1,0 +1,5 @@
+{
+  "name": "e-Colis",
+  "description": "A comprehensive delivery management platform connecting merchants and independent couriers with gamified incentives.",
+  "requestFramePermissions": ["geolocation"]
+}
